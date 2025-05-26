@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "752726886143",
+    "project_id": "aurora-69630",
+    "storage_bucket": "aurora-69630.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752726886143:android:f01e8406abdd888d98aeca",
+        "android_client_info": {
+          "package_name": "com.fake.poe_summative"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABKFzY-WHQD1dYGR40_BEi8yqV_MRKqBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
