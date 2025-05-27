@@ -23,7 +23,7 @@ class LandingPageActivity : AppCompatActivity() {
         btnRegister = findViewById(R.id.btnRegister)
 
         btnLogin.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
