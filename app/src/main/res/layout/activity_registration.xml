@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/Lavander"
+    tools:context=".RegistrationActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aurora"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="24sp"
+        android:textColor="@color/Purple"
+        android:layout_marginBottom="24dp"/>
+
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Enter Your Email"
+        android:background="@android:drawable/editbox_background"/>
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Enter your name"
+        android:background="@android:drawable/editbox_background"/>
+
+    <EditText
+        android:id="@+id/etDOB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:ems="10"
+        android:inputType="date"
+        android:focusable="false"
+        android:clickable="true"
+        android:hint="Date Of Birth"
+        android:background="@android:drawable/editbox_background"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Enter Password"
+        android:background="@android:drawable/editbox_background"/>
+
+    <EditText
+        android:id="@+id/etConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint=" Confirm Password"
+        android:background="@android:drawable/editbox_background"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:background="@drawable/button_outline"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="391dp"
+        android:layout_marginBottom="12dp"
+        android:padding="12sp"/>
+</LinearLayout>
