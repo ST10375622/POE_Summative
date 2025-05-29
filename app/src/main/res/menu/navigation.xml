@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icons for my navigation features -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/Budget"
+        android:icon="@drawable/baseline_budget"
+        android:title="Budget" />
+
+    <item
+        android:id="@+id/Notification"
+        android:icon="@drawable/outline_notification"
+        android:title="Notification"/>
+
+    <item
+        android:id="@+id/Report"
+        android:icon="@drawable/baseline_report"
+        android:title="Reports"/>
+
+    <item
+        android:id="@+id/Progress"
+        android:icon="@drawable/baseline_assessment_24"
+        android:title="progress"/>
+
+    <item
+        android:id="@+id/Profile"
+        android:icon="@drawable/baseline_profile"
+        android:title="Profile"/>
+</menu>

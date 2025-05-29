@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@color/Lavander">
+
+    <TextView
+        android:id="@+id/txtExpenseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expense Name"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtExpenseAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R 0.00"/>
+
+    <TextView
+        android:id="@+id/txtExpenseDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"/>
+
+    <ImageView
+        android:id="@+id/imgReceipt"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"/>
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Lavander">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/editExpenseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="name"/>
+
+        <EditText
+            android:id="@+id/editExpenseDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"/>
+
+        <EditText
+            android:id="@+id/editExpenseAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Amount"/>
+
+        <TextView
+            android:id="@+id/textExpenseDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Lavander"
+            android:padding="10dp"
+            android:text="Select Date"/>
+
+        <Button
+            android:id="@+id/btnUploadReciept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Receipt (optional)"
+            android:layout_marginTop="10dp"
+            android:background="@color/Purple"/>
+    </LinearLayout>
+
+</ScrollView>
