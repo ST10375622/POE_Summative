@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
+
         <TextView
             android:id="@+id/txtCategoryName"
             android:layout_width="0dp"
@@ -19,7 +20,6 @@
             android:text="Category"
             android:textStyle="bold"
             android:textSize="16sp" />
-
 
         <ImageButton
             android:id="@+id/btnAddExpense"
@@ -33,6 +33,7 @@
         android:id="@+id/recyclerExpenses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:paddingTop="4dp"/>
 
 </LinearLayout>

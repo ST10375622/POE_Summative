@@ -14,19 +14,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/Purple"
-            app:title="Budget"/>
+            app:title="Budget"
+            app:titleTextColor="@color/black"/>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,14 +40,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="30dp">
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="24dp">
 
                     <ImageView
                         android:id="@+id/imageProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
                         android:scaleType="centerCrop"
-                        android:background="@mipmap/profile"/>
+                        android:background="@mipmap/profile"
+                        android:contentDescription="Profile Picture"/>
 
                     <TextView
                         android:id="@+id/textProfileName"
@@ -55,7 +58,6 @@
                         android:text="Hello User"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:gravity="center_vertical"
                         android:padding="12dp"/>
                 </LinearLayout>
 
@@ -70,7 +72,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@color/Purple"/>
 
-                <!--Budget section-->
+                <!--com.fake.poe_summative.Budget section-->
                 <LinearLayout
                     android:id="@+id/BudgetSection"
                     android:layout_width="match_parent"
@@ -78,7 +80,6 @@
                     android:orientation="vertical"
                     android:background="@color/Purple"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
                     android:padding="12dp">
 
                     <LinearLayout
@@ -127,11 +128,11 @@
                     android:id="@+id/AddCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|bottom"
                     android:layout_marginBottom="16dp"
                     android:src="@drawable/baseline_add_circle_24"
                     android:tint="@color/white"
-                    android:contentDescription="Add"
+                    android:contentDescription="Add Category"
                     android:backgroundTint="@color/Lavander"/>
             </LinearLayout>
         </ScrollView>

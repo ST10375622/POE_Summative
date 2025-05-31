@@ -2,32 +2,34 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/Lavander">
+    android:background="@color/Lavander"
+    android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/editExpenseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="name"/>
+            android:hint="Expense Name"/>
 
         <EditText
             android:id="@+id/editExpenseDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Description"/>
+            android:hint="Description"
+            android:layout_marginTop="8dp"/>
 
         <EditText
             android:id="@+id/editExpenseAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:hint="Amount"/>
+            android:hint="Amount"
+            android:layout_marginTop="8dp"/>
 
         <TextView
             android:id="@+id/textExpenseDate"
@@ -35,15 +37,16 @@
             android:layout_height="wrap_content"
             android:background="@color/Lavander"
             android:padding="10dp"
-            android:text="Select Date"/>
+            android:text="Select Date"
+            android:layout_marginTop="8dp"/>
+
 
         <Button
             android:id="@+id/btnUploadReciept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Upload Receipt (optional)"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:background="@color/Purple"/>
     </LinearLayout>
-
 </ScrollView>
