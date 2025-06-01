@@ -36,7 +36,8 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:hint="Enter Your Email"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/etLoginPassword"
@@ -46,7 +47,8 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="Enter Password"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnLogin"

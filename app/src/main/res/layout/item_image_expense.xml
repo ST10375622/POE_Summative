@@ -17,13 +17,15 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:text="Groceries"/>
+            android:text="Groceries"
+            android:textColor="@color/black"/>
         <TextView
             android:id="@+id/textExpenseAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" R 1 500"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <ImageView

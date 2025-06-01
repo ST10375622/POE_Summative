@@ -11,19 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Expense Name"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/txtExpenseAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="R 0.00"/>
+        android:text="R 0.00"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/txtExpenseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"/>
+        android:text="Date"
+        android:textColor="@color/black"/>
 
     <ImageView
         android:id="@+id/imgReceipt"

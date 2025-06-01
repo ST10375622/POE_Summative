@@ -37,7 +37,8 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:hint="Enter Your Email"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/etName"
@@ -47,7 +48,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Enter your name"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/etDOB"
@@ -59,7 +61,8 @@
         android:focusable="false"
         android:clickable="true"
         android:hint="Date Of Birth"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -69,7 +72,8 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="Enter Password"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/etConfirmPassword"
@@ -79,7 +83,8 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint=" Confirm Password"
-        android:background="@android:drawable/editbox_background"/>
+        android:background="@android:drawable/editbox_background"
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/btnRegister"
