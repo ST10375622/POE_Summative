@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Purple"
+            app:title="Home"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!--Users information section-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="24dp"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:id="@+id/imageProfile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="centerCrop"
+                        android:background="@mipmap/profile"
+                        android:contentDescription="Profile Picture"/>
+
+                    <TextView
+                        android:id="@+id/textProfileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hello User"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:padding="12dp"/>
+                </LinearLayout>
+
+<!--                date section-->
+                <LinearLayout
+                    android:id="@+id/dateSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@color/Purple">
+
+                    <TextView
+                        android:id="@+id/textSelectedRange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Date Range"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:padding="8dp"/>
+
+                    <Button
+                        android:id="@+id/btnSelectDateRange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pick Date Range" />
+
+                </LinearLayout>
+
+                <!--Budget section-->
+                <LinearLayout
+                    android:id="@+id/BudgetSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/Purple"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+                        <TextView
+                            android:id="@+id/textMonthlyBudget"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Budget: R 0.00"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="16dp"/>
+
+                        <TextView
+                            android:id="@+id/textMoneyLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Left: R 0.00"
+                            android:textSize="20sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Code Attribution:
+                   MPAndroidChart Library
+                   Visual data representation using the MPAndroidChart library (Jahoda, 2024)
+                   Link: https://github.com/PhilJay/MPAndroidChart-->
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/textTotalExpenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R10 000\n Your total Expenses so far"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"/>
+
+                <LinearLayout
+                    android:id="@+id/legendContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background="@color/Lavander">
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/Purple"
+        app:menu="@menu/navigation"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

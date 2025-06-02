@@ -521,7 +521,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         navView.setNavigationItemSelectedListener { menuItem ->
             drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.itemId) {
-                R.id.home -> startActivity(Intent(this, MainActivity::class.java))
+                R.id.home -> startActivity(Intent(this, HomeActivity::class.java))
                 //R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
                 R.id.Budget -> recreate()
                 else -> false
