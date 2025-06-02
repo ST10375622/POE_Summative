@@ -73,7 +73,7 @@ class RegistrationActivity : AppCompatActivity() {
                             "dob" to dob
                         )
 
-                        firestore.collection("users").document(userId).set(userMap)
+                        firestore.collection("user").document(userId).set(userMap)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT)
                                     .show()
