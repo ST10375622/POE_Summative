@@ -522,6 +522,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.itemId) {
                 R.id.home -> startActivity(Intent(this, HomeActivity::class.java))
+                R.id.Progress -> startActivity(Intent(this, ProgressActivity::class.java))
                 //R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
                 R.id.Budget -> recreate()
                 else -> false
