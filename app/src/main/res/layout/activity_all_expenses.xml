@@ -60,36 +60,33 @@
             android:padding="12dp"/>
     </LinearLayout>
 
-    <!--Budget section-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/Purple">
-
-        <Button
-            android:id="@+id/btnPreviousMonth"
-            android:layout_width="wrap_content"
+        <!--date section-->
+        <LinearLayout
+            android:id="@+id/dateSection"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Previos"/>
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@color/Purple">
 
-        <TextView
-            android:id="@+id/textCurrentMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="March 2025"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="16dp"/>
+            <TextView
+                android:id="@+id/textSelectedRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date Range"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:padding="8dp"/>
 
-        <Button
-            android:id="@+id/btnNextMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnSelectDateRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Date Range" />
+
+        </LinearLayout>
 
         <TextView
             android:text="All Expenses"
@@ -107,12 +104,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginTop="8dp" />
-
-        <Button
-            android:id="@+id/btnBackToReport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"/>
 
     </LinearLayout>
     </ScrollView>

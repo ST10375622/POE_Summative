@@ -277,6 +277,7 @@ class HomeActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.Budget -> startActivity(Intent(this, BudgetActivity::class.java))
                 R.id.Progress -> startActivity(Intent(this, ProgressActivity::class.java))
+                R.id.Report -> startActivity(Intent(this, MonthlyReportActivity::class.java))
                 //R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
                 R.id.home -> recreate()
                 else -> false
