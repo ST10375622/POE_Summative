@@ -279,7 +279,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.Progress -> startActivity(Intent(this, ProgressActivity::class.java))
                 R.id.Report -> startActivity(Intent(this, MonthlyReportActivity::class.java))
                 R.id.Notification -> startActivity(Intent(this, NotificationActivity::class.java))
-                //R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
+                R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
                 R.id.home -> recreate()
                 else -> false
             }
