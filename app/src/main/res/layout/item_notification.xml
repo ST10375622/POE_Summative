@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Making use of cardview to display the notifications
+    It makes the notifications look clean and clear -->
+<!--The implementation uses the cardview layout as
+recommended in the Android Developer documentation (Android Developers, 2024)
+Link: https://developer.android.com/develop/ui/views/layout/cardview -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notificationCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    android:backgroundTint="@color/Gray"
+    app:cardMaxElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewNotificationMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notification Message"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/textViewNotificationDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="24/03/2025"
+            android:textSize="12dp"
+            android:textColor="@color/black"
+            android:paddingTop="8dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

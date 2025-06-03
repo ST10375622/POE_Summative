@@ -8,6 +8,7 @@ import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -42,6 +43,7 @@ import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import com.google.firebase.Timestamp
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -179,6 +181,13 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
                                             val left = budget.monthlyBudget - totalExpenses
                                             textLeft.text = "Left: R $left"
                                             updateBudgetAmountLeft(budget, totalExpenses)
+
+                                            Log.d("NotificationDebug", "TotalExpenses: $totalExpenses, MinBudget: ${budget.minimumBudget}")
+
+                                            if (totalExpenses > budget.minimumBudget) {
+                                                Log.d("NotificationDebug", "Condition met — total > minimum. Adding notification.")
+                                                checkAndAddBudgetExceededNotification()
+                                            }
                                         }
                                     }
                             }
@@ -517,6 +526,28 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         cameraLauncher.launch(cameraIntent)
     }
 
+    private fun checkAndAddBudgetExceededNotification() {
+        val notification = Notification(
+            message = "Alert! You've exceeded your minimum budget.",
+            timestamp = Timestamp.now(),
+            read = false
+        )
+
+        val userDoc = db.collection("user").document(currentUserId)
+
+        userDoc.collection("notifications")
+            .add(notification)
+            .addOnSuccessListener {
+                Log.d("NotificationTest", "Auto-notification added")
+            }
+            .addOnFailureListener {
+                Log.e("NotificationTest", "Failed to add notification", it)
+            }
+
+
+    }
+
+
     private fun setupNavigation() {
         navView.setNavigationItemSelectedListener { menuItem ->
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -524,6 +555,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
                 R.id.home -> startActivity(Intent(this, HomeActivity::class.java))
                 R.id.Progress -> startActivity(Intent(this, ProgressActivity::class.java))
                 R.id.Report -> startActivity(Intent(this, MonthlyReportActivity::class.java))
+                R.id.Notification -> startActivity(Intent(this, NotificationActivity::class.java))
                 //R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
                 R.id.Budget -> recreate()
                 else -> false
