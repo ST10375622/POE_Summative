@@ -237,7 +237,7 @@ class ProgressActivity : AppCompatActivity() {
                 R.id.Budget -> startActivity(Intent(this, BudgetActivity::class.java))
                 R.id.home -> startActivity(Intent(this, HomeActivity::class.java))
                 R.id.Report -> startActivity(Intent(this, MonthlyReportActivity::class.java))
-                //R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
+                R.id.Profile -> startActivity(Intent(this, ProfileActivity::class.java))
                 R.id.Progress -> recreate()
                 else -> false
             }
