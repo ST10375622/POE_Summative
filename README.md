@@ -22,7 +22,7 @@ They will be able to visualize where their money is going and what uses up the m
 - Graphs that will show daily spending
 - A progression Dashboard showing where the individual is at the current month
 
-- # My own Features that i have implemented
+- ## My own Features that i have implemented
 - gamification elements which is growing a tree depeinding on the number of transactions made
 - Notification to notify user when they are about to go overbudget
 - Monthly report generated for users
