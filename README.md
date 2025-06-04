@@ -8,6 +8,8 @@ to eneter their income and any expenses. Some of the innovative features that I 
 The notification feature will alert the user when they are about to go over budget.
 The gamification features include badges for every month that the user does not go over budget and rewards for every time they enter their expenses. 
 Reports and graphs will be created to ensure that the user is aware of where they are in their finances, this was a very common feature among the different apps that I researched.
+The apps main purpose is to allow users to keep track of their money. It will also help them with their monthly goals and to show them where they are currently when it comes to their finances. 
+They will be able to visualize where their money is going and what uses up the most of their money. 
 
 ## 🚀 Features
 
@@ -19,18 +21,31 @@ Reports and graphs will be created to ensure that the user is aware of where the
 - Ability to view total monthly spending for a selectable period
 - Graphs that will show daily spending
 - A progression Dashboard showing where the individual is at the current month
+
+- # My own Features that i have implemented
 - gamification elements which is growing a tree depeinding on the number of transactions made
 - Notification to notify user when they are about to go overbudget
 - Monthly report generated for users
-- Device sharing
 
 ## Changes made to app
 - Removed the rewards sytem for gamification and replaced it with the tree growing based off the number of transactions made by a user.
 - i also added the daily streak feature
 - i also made a change to the navigation to make the app user friendly
+- User selectable period and not monthly view
+
+## Lecturer Feedback
+- The user must be able to view graph showing the amount spent per category over a user-selectable period.
+
+##GitHub Actions
+- I created different Branches for my different screens on my app
+- I created workflows that build and test every pull request to my repository, or deploy merged pull requests to production.
+- I push to a specific branch when i was working on it
+- When i was done with that branch i would merge it to the main branch
+- Before the branches could get merged they were tested
+- All my commits were Tested
 
 ## Video Link:
-- 
+- <https://youtu.be/2FTbVmsloNc?si=pYseV_mVPsFnMcC>
 
 ## Installation
 - ensure that you have android studio. (prefibly the latest version as i have used the lastest version)
