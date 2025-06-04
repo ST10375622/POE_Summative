@@ -55,45 +55,58 @@ They will be able to visualize where their money is going and what uses up the m
 - Ensure that the camera permissions are turned on or you will not be able to take a picture with the phone. 
 
 ## Reference 
-Android Developers, 2024. CardView overview. [online] Available at:
+ Android Developers, 2024. CardView overview. [online] Available at:
 <<https://developer.android.com/develop/ui/views/layout/cardview>>
 [Accessed 30 May 2025].
+
 Android Developers, 2024. DiffUtil.ItemCallback. [online] Available at:
 <<https://developer.android.com/reference/androidx/recyclerview/widget/DiffUtil.ItemCallback>>
 [Accessed 01 June 2025].
+
 Android Developers, 2024. Dialogs. [online] Available at:
 <<https://developer.android.com/develop/ui/views/components/dialogs>>
 [Accessed 01 June 2025].
+
 Android Developers, 2024. LayoutInflater. [online] Available at:
 <<https://developer.android.com/reference/android/view/LayoutInflater>>
 [Accessed 01 June 2025].
+
 Android Developers, 2024. Navigation drawer. [online] Available at:
 <<https://developer.android.com/guide/navigation/navigation-ui>>
 [Accessed 20 Apr. 2025].
+
 Android Developers, 2024. NavigationView. [online] Available at:
 <<https://developer.android.com/reference/com/google/android/material/navigation/NavigationView>>
 [Accessed 20 April 2025].
+
 Android Developers, 2024d. notifyDataSetChanged() - RecyclerView.Adapter. [online] Available at:
 <<https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter#notifyDataSetChanged()>>
 [Accessed 30 April 2025].
+
 Android Developers, 2024. RecyclerView.Adapter. [online] Available at:
 <<https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter>>
 [Accessed 25 April 2025].
+
 Android Developers, 2024. RecyclerView overview. [online] Available at:
 <<https://developer.android.com/guide/topics/ui/layout/recyclerview>>
 [Accessed 25 Apr. 2025].
+
 Android Developers, 2024. RecyclerView.ViewHolder. [online] Available at:
 <<https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.ViewHolder>>
 [Accessed 25 April 2025].
+
 Android Developers, 2024. ViewHolder pattern. [online] Available at:
 <<https://developer.android.com/develop/ui/views/layout/recyclerview#view-holder>>
 [Accessed 28 April 2025].
+
 Android Developers, [s.a.]. SharedPreferences. [online] Available at:
 <<https://developer.android.com/reference/android/content/SharedPreferences>>
 [Accessed 1 June 2025].
+
 Bumptech, 2024. Glide: Image Loading and Caching Library for Android. [online] Available at:
 <<https://bumptech.github.io/glide/>>
 [Accessed 30 Apr. 2025].
+
 Philipp, J., 2024. MPAndroidChart. [Source Code].
 <<Available at: https://github.com/PhilJay/MPAndroidChart>>
 [Accessed 25 April 2025].
