@@ -1,5 +1,7 @@
 # Aurora
 
+![My App Logo](AppLogo.PNG)
+
 This is a personal budget tracker app. The name of my app is Aurora. This app will allow individuals to manage their money.
 This app exists as it will help individuals set out a budget and it will help the individuals 
 to eneter their income and any expenses. Some of the innovative features that I will be implementing are notifications, gamification features, reports and graphs. 
