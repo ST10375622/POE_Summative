@@ -138,12 +138,14 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         setupNavigation()
     }
 
+    //returns the logged-in users name
     private fun fetchUserName(textView: TextView){
         db.collection("user").document(currentUserId)
             .get().addOnSuccessListener {
                 textView.text = "Hello, ${it.getString("name")}"
             }
     }
+
 
     private fun fetchUserBudget(textBudget: TextView, textLeft: TextView) {
         val userDoc = db.collection("user").document(currentUserId)
@@ -205,7 +207,10 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             .set(updatedBudget)
     }
 
-
+    /*
+    * Retrieves all the categories and their expenses
+    * updates the PieChart
+    */
     private fun fetchCategoriesAndExpenses(pieChart: PieChart) {
         db.collection("user").document(currentUserId)
             .collection("categories")
@@ -215,7 +220,9 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
                         it.toObject(Category::class.java)?.copy(id = it.id)
                     }
 
+                    //updates the RecyclerView with the new list
                     categoryAdapter.submitList(categories)
+                    //creates a category name lookup
                     val categoryMap = categories.associateBy({ it.id }, { it.name })
 
                     val allExpenses = mutableListOf<Expense>()
@@ -226,6 +233,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
                         return@addSnapshotListener
                     }
 
+                    //fetches expenses from each category
                     categories.forEach { category ->
                         db.collection("user").document(currentUserId)
                             .collection("categories").document(category.id)
@@ -247,6 +255,10 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             }
     }
 
+    /*
+    * Displays the Budget dialog
+    * enables the user to enter the min and max budget
+    * */
     private fun showBudgetDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_set_budget, null)
         val monthlyBudgetInput = dialogView.findViewById<EditText>(R.id.editMonthlyBudget)
@@ -321,6 +333,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             }
     }
 
+    /*Enables the user to add a category name*/
     private fun showAddCategoryDialog() {
         val input = EditText(this)
         AlertDialog.Builder(this)
@@ -341,6 +354,10 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             .show()
     }
 
+    /*
+    Enables the user to add an expense under the category
+    Enables the user to take an optional image
+    */
     private fun showAddExpenseDialog(categoryId: String) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_expense, null)
         val nameInput = dialogView.findViewById<EditText>(R.id.editExpenseName)
@@ -353,6 +370,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateText.text = dateFormat.format(calendar.time)
 
+        //date picker
         dateText.setOnClickListener {
             DatePickerDialog(this, { _, y, m, d ->
                 calendar.set(y, m, d)
@@ -360,6 +378,7 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
         }
 
+        //enable the user to upload using the camera or from their gallery
         uploadButton.setOnClickListener {
             val options = arrayOf("Take Photo", "Choose from Gallery")
             AlertDialog.Builder(this)
@@ -427,18 +446,30 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         dialog.show()
     }
 
+    /*
+    * If the user uses their camera
+    * */
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraLauncher.launch(intent)
     }
 
+    /*
+    * If the user uses the gallery
+    * */
     private fun pickFromGallery() {
         imagePickerLauncher.launch("image/*")
     }
 
-
+    /*
+    * Converts a Bitmap image into Base64 encoded string
+    * */
     private fun encodeImageToBase64(bitmap: Bitmap): String {
         val outputStream = ByteArrayOutputStream()
+        /*
+        * compresses the bitmap as a JPEG image with 50% quality
+        * reduces the size
+        * writes the compressed data into outputStream */
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
         val imageBytes = outputStream.toByteArray()
         return Base64.encodeToString(imageBytes, Base64.DEFAULT)
@@ -487,7 +518,9 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         pieChart.animateY(1000, Easing.EaseInOutQuad)
     }
 
-
+    /*
+    * Adds automatic notification to when user exceeds their budget
+    * */
     private fun checkAndAddBudgetExceededNotification() {
         val notification = Notification(
             message = "Alert! You've exceeded your minimum budget.",

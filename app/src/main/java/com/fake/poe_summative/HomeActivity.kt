@@ -102,6 +102,7 @@ class HomeActivity : AppCompatActivity() {
         setupNavigation()
     }
 
+    //returns the logged-in users name
     private fun fetchUserName(textView: TextView){
         db.collection("user").document(currentUserId)
             .get().addOnSuccessListener {
@@ -109,11 +110,13 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
+    //updates the date range
     private fun updateDateRangeText() {
         val formatter = DateTimeFormatter.ofPattern("dd MMM YYYY")
         textDateRange.text = "${startDate.format(formatter)} to ${endDate.format(formatter)}"
     }
 
+    //date range dialog
     private fun showDateRangePicker() {
         val picker = MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText("select Period")
@@ -132,6 +135,7 @@ class HomeActivity : AppCompatActivity() {
             fetchAndDisplayExpenses()
         }
     }
+
 
     private fun fetchAndDisplayExpenses() {
         db.collection("user").document(currentUserId)
@@ -179,17 +183,23 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
+    /*
+    * Generates a PieChart
+    * creates custom legend*/
     private fun updateChart(expenses: List<Expense>, categoryMap: Map<String, String>) {
-        val grouped = expenses.groupBy { it.categoryId }
+        val grouped = expenses.groupBy { it.categoryId } //groups expenses by category
+        //piechart entries
         val entries = grouped.map {
             PieEntry(it.value.sumOf { e -> e.amount }.toFloat())
         }
 
+        //maps category Ids to names
         val labels = grouped.map { categoryMap[it.key] ?: "Unkown" }
+        //sum of all expenses and updates TextView
         val total = expenses.sumOf { it.amount }
-
         textTotalExpense.text = "R$total\nYour Total Expenses in range"
 
+        //piDataSet built
         val dataSet = PieDataSet(entries, "")
         dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
         dataSet.valueFormatter = PercentFormatter(pieChart)
@@ -206,6 +216,7 @@ class HomeActivity : AppCompatActivity() {
             isEnabled = false
         }
 
+        //custom legend created
         legendContainer.removeAllViews()
         labels.forEachIndexed { i, label ->
             val view = TextView(this).apply {
@@ -218,6 +229,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    /*
+    * listens for any changes in the users monthly budget
+    * calculates the amount left from the budget*/
     private fun fetchUserBudget(textBudget: TextView, textLeft: TextView) {
         val userDoc = db.collection("user").document(currentUserId)
 
@@ -264,6 +278,7 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
+
     private fun updateBudgetAmountLeft(budget: Budget, totalExpenses: Double) {
         val updatedBudget = budget.copy(amountLeft = budget.monthlyBudget - totalExpenses)
         db.collection("user").document(currentUserId)
@@ -271,6 +286,7 @@ class HomeActivity : AppCompatActivity() {
             .set(updatedBudget)
     }
 
+    //enables the users navigation
     private fun setupNavigation() {
         navView.setNavigationItemSelectedListener { menuItem ->
             drawerLayout.closeDrawer(GravityCompat.START)

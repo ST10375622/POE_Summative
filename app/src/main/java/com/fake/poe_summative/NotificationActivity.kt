@@ -76,6 +76,7 @@ class NotificationActivity : AppCompatActivity() {
 
     }
 
+    //fetches users name
     private fun fetchUserName(textView: TextView){
         db.collection("user").document(currentUserId)
             .get().addOnSuccessListener {
@@ -83,6 +84,7 @@ class NotificationActivity : AppCompatActivity() {
             }
     }
 
+    //fetches notification stored
     private fun fetchNotification(){
         db.collection("user").document(currentUserId)
             .collection("notifications")

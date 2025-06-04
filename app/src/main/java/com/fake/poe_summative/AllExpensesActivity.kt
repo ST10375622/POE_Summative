@@ -54,6 +54,7 @@ class AllExpensesActivity : AppCompatActivity() {
         //Initialize Firebase
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+        //retrives the user id from firebase
         currentUserId = auth.currentUser?.uid ?: run {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
             finish()
@@ -93,6 +94,7 @@ class AllExpensesActivity : AppCompatActivity() {
         }
     }
 
+    //returns the logged-in users name
     private fun fetchUserName(textView: TextView){
         db.collection("user").document(currentUserId)
             .get().addOnSuccessListener {
@@ -105,6 +107,7 @@ class AllExpensesActivity : AppCompatActivity() {
         textDateRange.text = "${startDate.format(formatter)} to ${endDate.format(formatter)}"
     }
 
+    //date range dialog
     private fun showDateRangePicker() {
         val picker = MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText("select Period")
@@ -124,6 +127,10 @@ class AllExpensesActivity : AppCompatActivity() {
         }
     }
 
+    /*
+    * Fetches all the expenses
+    * the expenses are filtered by selected date range
+    */
     private fun fetchExpenses() {
         db.collection("user").document(currentUserId)
             .collection("categories")
@@ -167,6 +174,8 @@ class AllExpensesActivity : AppCompatActivity() {
 
             }
     }
+
+    //Directs the user to a specific page
     private fun setupNavigation() {
         navView.setNavigationItemSelectedListener { menuItem ->
             drawerLayout.closeDrawer(GravityCompat.START)

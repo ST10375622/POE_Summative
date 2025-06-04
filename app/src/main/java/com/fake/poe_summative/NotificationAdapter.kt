@@ -22,12 +22,20 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.Notificatio
         val timestampTextView: TextView = itemView.findViewById(R.id.textViewNotificationDate)
     }
 
+    /*Inflates the layout for the notification
+   * Code Attribution
+   * RecyclerView.Adapter
+   * Android Developer (2024)*/
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_notification, parent, false)
         return NotificationViewHolder(view)
     }
 
+    /*Observes notifications
+    * Code Attribution
+    * LiveData.observeForever()
+    * Android Developer (2024)*/
     override  fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val notification = notifications[position]
         holder.messageTextView.text = notification.message

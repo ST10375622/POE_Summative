@@ -113,6 +113,7 @@ class MonthlyReportActivity : AppCompatActivity() {
 
     }
 
+    //fetches username
     private fun fetchUserName(textView: TextView){
         db.collection("user").document(currentUserId)
             .get().addOnSuccessListener {
@@ -120,11 +121,17 @@ class MonthlyReportActivity : AppCompatActivity() {
             }
     }
 
+    //Converts the numeric month into a readable string
+    //Code Attribution
+    //Class LocalDate
+    //Oracle (2024)
     private fun updateMonthText() {
         val monthName = Month.of(currentMonth).getDisplayName(TextStyle.FULL, Locale.getDefault())
         textMonth.text = "$monthName $currentYear"
     }
 
+    //loads monthly report for the user
+    //takes into account when any changes were made to the date
     private fun loadMonthlyData() {
         val expenses = mutableListOf<Expense>()
         val categorySums = mutableMapOf<String, Double>()
@@ -140,6 +147,7 @@ class MonthlyReportActivity : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
 
+                //loops through each category and query its expenses sub-collection
                 var completed = 0
                 categoryDocs.forEach { categoryDoc ->
                     val catId = categoryDoc.id
@@ -179,6 +187,7 @@ class MonthlyReportActivity : AppCompatActivity() {
             }
     }
 
+    //sets up the stats to be displayed
     private fun updateStats(total: Double, topCategory: String, count: Int) {
         textTotalSpent.text = "Total Spent: R ${total.toInt()}"
         textTopCategory.text = "Top Category: $topCategory"

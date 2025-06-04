@@ -78,6 +78,7 @@ class ProfileActivity : AppCompatActivity() {
             }
     }
 
+    //updates the daily streak
     private fun updateDailyStreak() {
         val prefs = getSharedPreferences("StreakPrefs", MODE_PRIVATE)
         val lastLogin = prefs.getString("last_login", null)
@@ -110,6 +111,7 @@ class ProfileActivity : AppCompatActivity() {
         streakTextView.text = "Streak: ${prefs.getInt("streak", 1)} days"
     }
 
+    //gets transaction count to update the tree images
     private fun loadTreeGrowth() {
         val userDoc = db.collection("user").document(currentUserId)
 
@@ -122,7 +124,6 @@ class ProfileActivity : AppCompatActivity() {
                 updateTreeImage(0)
                 return@addOnSuccessListener
             }
-
 
             categoryIds.forEach { catId ->
                 userDoc.collection("categories").document(catId)
@@ -140,6 +141,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    //updates the Tree image based off the number of transactions
     private fun updateTreeImage(transactionCount: Int) {
         val treeRes = when {
             transactionCount >= 30 -> R.mipmap.tree_stage_7

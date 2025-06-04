@@ -125,6 +125,9 @@ class ProgressActivity : AppCompatActivity() {
         }
     }
 
+    /*
+    * fetches and displays users progress
+    * calculates the progress*/
     private fun fetchAndDisplayProgress() {
         db.collection("user").document(currentUserId)
             .collection("categories")
@@ -135,11 +138,13 @@ class ProgressActivity : AppCompatActivity() {
                 var totalExpenses = 0.0
                 var completed = 0
 
+                //if there is no data it will return nothing
                 if (categoryIds.isEmpty()) {
                     updateProgressChart(0.0, 0.0)
                     return@addOnSuccessListener
                 }
 
+                //loop through each category
                 categoryIds.forEach { catId ->
                     db.collection("user").document(currentUserId)
                         .collection("categories").document(catId)
@@ -180,9 +185,13 @@ class ProgressActivity : AppCompatActivity() {
             }
     }
 
+    /*
+    * Bar chart to visually display the difference between the budget and the expenses
+    * updates the budget textview*/
     private fun updateProgressChart(budgetAmount: Double, expensesAmount: Double) {
         spentAmountText.text = "R ${expensesAmount.toInt()}"
 
+        //shows status
         if (budgetAmount == 0.0) {
             labelStatus.text = "No Budget Set"
             labelStatus.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray))
@@ -191,7 +200,8 @@ class ProgressActivity : AppCompatActivity() {
             if (percentSpent <= 100) {
                 labelStatus.text = "On Track"
                 labelStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
-            } else {
+            }
+             else {
                 labelStatus.text = "Over Budget"
                 labelStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
             }
@@ -202,6 +212,7 @@ class ProgressActivity : AppCompatActivity() {
             BarEntry(1f, expensesAmount.toFloat())
         )
 
+        //styles chart
         val dataSet = BarDataSet(entries, "Progress")
         dataSet.colors = listOf(
             ContextCompat.getColor(this, android.R.color.holo_blue_light),
@@ -217,6 +228,7 @@ class ProgressActivity : AppCompatActivity() {
         barChart.legend.isEnabled = false
         barChart.setFitBars(true)
 
+        //configure x-axis
         val xAxis = barChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(listOf("Budget", "Expenses"))
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -224,6 +236,7 @@ class ProgressActivity : AppCompatActivity() {
         xAxis.granularity = 1f
         xAxis.textSize = 16f
 
+        //configure y-axis
         barChart.axisLeft.axisMinimum = 0f
         barChart.axisRight.isEnabled = false
         barChart.animateY(1000)
