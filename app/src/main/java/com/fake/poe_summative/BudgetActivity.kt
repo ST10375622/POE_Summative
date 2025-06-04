@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LegendEntry
@@ -450,8 +451,11 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
 
     private fun updatePieChart(pieChart: PieChart, expenses: List<Expense>, categoryMap: Map<String, String>) {
         val grouped = expenses.groupBy { it.categoryId }
-        val entries = grouped.map { PieEntry(it.value.sumOf { e -> e.amount }.toFloat()) }
-        val labels = grouped.map { categoryMap[it.key] ?: "Unknown" }
+
+        val entries = grouped.map { (categoryId, expensesInCategory) ->
+            val label = categoryMap[categoryId] ?: "Unknown"
+            PieEntry(expensesInCategory.sumOf { it.amount }.toFloat(), label)
+        }
 
         val dataSet = PieDataSet(entries, "")
         dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
@@ -469,16 +473,20 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
             isEnabled = true
             form = Legend.LegendForm.CIRCLE
             textSize = 14f
-
-            xEntrySpace = 30f
-            yEntrySpace = 30f
-            formToTextSpace = 20f
-
-            setCustom(labels.mapIndexed { i, label ->
-                LegendEntry(label, Legend.LegendForm.CIRCLE, 10f, 2f, null, dataSet.colors[i])
-            })
+            xEntrySpace = 10f
+            yEntrySpace = 10f
+            formToTextSpace = 10f
+            verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            orientation = Legend.LegendOrientation.HORIZONTAL
+            setDrawInside(false)
         }
+
+        pieChart.description.isEnabled = false
+        pieChart.setDrawEntryLabels(false) // Optional: remove clutter
+        pieChart.animateY(1000, Easing.EaseInOutQuad)
     }
+
 
     private fun checkAndAddBudgetExceededNotification() {
         val notification = Notification(
