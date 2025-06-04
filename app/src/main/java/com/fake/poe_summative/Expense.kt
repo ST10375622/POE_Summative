@@ -8,5 +8,5 @@ data class Expense (
     val description: String = "",
     val amount: Double = 0.0,
     val date: String = "",
-    val receiptUri: String? = null
+    val receiptImage: String? = null
 )

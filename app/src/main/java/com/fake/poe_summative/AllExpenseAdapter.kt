@@ -1,5 +1,7 @@
 package com.fake.poe_summative
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -42,18 +44,33 @@ class AllExpenseAdapter (
             amount.text = "R ${expense.amount}"
             date.text = expense.date
 
-            if(!expense.receiptUri.isNullOrBlank()) {
+            if (!expense.receiptImage.isNullOrBlank()) {
                 receipt.visibility = View.VISIBLE
-                Glide.with(itemView.context)
-                    .load(expense.receiptUri)
-                    .into(receipt)
+
+                if (expense.receiptImage.startsWith("http")) {
+                    // Firebase Storage URL
+                    Glide.with(itemView.context)
+                        .load(expense.receiptImage)
+                        .into(receipt)
+                } else {
+                    // Assume it's Base64
+                    try {
+                        val decodedBytes = Base64.decode(expense.receiptImage, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                        receipt.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        receipt.visibility = View.GONE
+                    }
+                }
 
                 receipt.setOnClickListener {
-                    onReceiptClick(expense.receiptUri)
+                    onReceiptClick(expense.receiptImage)
                 }
             } else {
                 receipt.visibility = View.GONE
             }
+
         }
     }
 }

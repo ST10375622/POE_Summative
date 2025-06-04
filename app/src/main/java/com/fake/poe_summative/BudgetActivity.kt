@@ -4,10 +4,12 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -44,6 +46,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import com.google.firebase.Timestamp
+import java.io.ByteArrayOutputStream
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -57,17 +60,12 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var imagePickerLauncher: ActivityResultLauncher<String>
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
-    private lateinit var cameraImageUri: Uri
 
-    private lateinit var storage: FirebaseStorage
-    private lateinit var storageRef: StorageReference
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var currentUserId: String
 
-    private var selectedReceiptUri: Uri? = null
-    private var currentCategoryIdForExpense: String = ""
-    private var pendingImageCallback: ((String?) -> Unit)? = null
+    private var selectedBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +74,6 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-        storage = FirebaseStorage.getInstance()
-        storageRef = storage.reference
         currentUserId = auth.currentUser?.uid ?: run {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
             finish()
@@ -108,21 +104,26 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         recyclerView.adapter = categoryAdapter as RecyclerView.Adapter<*>
 
         cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK && result.data != null) {
-                val bitmap = result.data!!.extras?.get("data") as? Bitmap
-                bitmap?.let {
-                    val path = saveBitmapToInternalStorage(it)
-                    pendingImageCallback?.invoke(path)
-                    pendingImageCallback = null
+            if (result.resultCode == RESULT_OK) {
+                val bitmap = result.data?.extras?.get("data") as? Bitmap
+                if (bitmap != null) {
+                    selectedBitmap = bitmap
+                    Toast.makeText(this, "Image captured", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
-                val path = copyImageToInternalStorage(it)
-                pendingImageCallback?.invoke(path)
-                pendingImageCallback = null
+                try {
+                    val inputStream = contentResolver.openInputStream(uri)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    selectedBitmap = bitmap
+                    Toast.makeText(this, "Image selected", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
+                    selectedBitmap = null
+                }
             }
         }
 
@@ -351,8 +352,6 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         dateText.text = dateFormat.format(calendar.time)
 
-        var localImagePath: String? = null
-
         dateText.setOnClickListener {
             DatePickerDialog(this, { _, y, m, d ->
                 calendar.set(y, m, d)
@@ -366,12 +365,13 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
                 .setTitle("Upload Receipt")
                 .setItems(options) { _, which ->
                     when (which) {
-                        0 -> openCamera { path -> localImagePath = path }
-                        1 -> pickFromGallery { path -> localImagePath = path }
+                        0 -> openCamera()
+                        1 -> pickFromGallery()
                     }
                 }
                 .show()
         }
+
 
         val dialog = AlertDialog.Builder(this)
             .setTitle("Add Expense")
@@ -392,74 +392,61 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
                     return@setOnClickListener
                 }
 
-                fun saveExpense(receiptUrl: String?) {
-                    val expenseId = db.collection("user").document(currentUserId)
-                        .collection("categories").document(categoryId)
-                        .collection("expenses").document().id
+                val receiptBase64 = selectedBitmap?.let { encodeImageToBase64(it) }
 
-                    val expense = Expense(
-                        id = expenseId,
-                        categoryId = categoryId,
-                        userId = currentUserId,
-                        name = name,
-                        description = desc,
-                        amount = amount,
-                        date = date,
-                        receiptUri = receiptUrl
-                    )
+                val expenseId = db.collection("user").document(currentUserId)
+                    .collection("categories").document(categoryId)
+                    .collection("expenses").document().id
 
-                    db.collection("user").document(currentUserId)
-                        .collection("categories").document(categoryId)
-                        .collection("expenses").document(expenseId)
-                        .set(expense)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Expense added", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Failed to save expense", Toast.LENGTH_SHORT).show()
-                        }
-                }
+                val expense = Expense(
+                    id = expenseId,
+                    categoryId = categoryId,
+                    userId = currentUserId,
+                    name = name,
+                    description = desc,
+                    amount = amount,
+                    date = date,
+                    receiptImage = receiptBase64
+                )
 
-                if (localImagePath != null) {
-                    uploadImageToFirebase(localImagePath!!) { url -> saveExpense(url) }
-                } else {
-                    saveExpense(null)
-                }
+                db.collection("user").document(currentUserId)
+                    .collection("categories").document(categoryId)
+                    .collection("expenses").document(expenseId)
+                    .set(expense)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Expense added", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Failed to save expense", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
 
         dialog.show()
     }
 
-    private fun openCamera(onSaved: (String?) -> Unit) {
-        pendingImageCallback = onSaved
+    private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraLauncher.launch(intent)
     }
 
-    private fun pickFromGallery(onSaved: (String?) -> Unit) {
-        pendingImageCallback = onSaved
+    private fun pickFromGallery() {
         imagePickerLauncher.launch("image/*")
     }
 
-    private fun uploadImageToFirebase(localPath: String, onUploaded: (String?) -> Unit) {
-        val file = File(localPath)
-        val uri = Uri.fromFile(file)
-        val fileRef = storage.reference.child("receipts/${file.name}")
 
-        fileRef.putFile(uri)
-            .continueWithTask { task ->
-                if (!task.isSuccessful) throw task.exception ?: Exception("Upload failed")
-                fileRef.downloadUrl
-            }
-            .addOnSuccessListener { onUploaded(it.toString()) }
-            .addOnFailureListener {
-                Toast.makeText(this, "Upload failed", Toast.LENGTH_SHORT).show()
-                onUploaded(null)
-            }
+    private fun encodeImageToBase64(bitmap: Bitmap): String {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+        val imageBytes = outputStream.toByteArray()
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
     }
 
+    private fun decodeBase64ToBitmap(base64Str: String): Bitmap {
+        val decodedBytes = Base64.decode(base64Str, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+    }
 
     private fun updatePieChart(pieChart: PieChart, expenses: List<Expense>, categoryMap: Map<String, String>) {
         val grouped = expenses.groupBy { it.categoryId }
@@ -493,39 +480,6 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
         }
     }
 
-    private fun saveBitmapToInternalStorage(bitmap: Bitmap): String? {
-        return try {
-            val file = File(filesDir, "img_${System.currentTimeMillis()}.jpg")
-            FileOutputStream(file).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            }
-            file.absolutePath
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    private fun copyImageToInternalStorage(uri: Uri): String? {
-        return try {
-            val inputStream = contentResolver.openInputStream(uri)
-            val file = File(filesDir, "img_${System.currentTimeMillis()}.jpg")
-            val outputStream = FileOutputStream(file)
-            inputStream?.copyTo(outputStream)
-            inputStream?.close()
-            outputStream.close()
-            file.absolutePath
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    private fun openCameraForCategory() {
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraLauncher.launch(cameraIntent)
-    }
-
     private fun checkAndAddBudgetExceededNotification() {
         val notification = Notification(
             message = "Alert! You've exceeded your minimum budget.",
@@ -546,7 +500,6 @@ class BudgetActivity : AppCompatActivity(), ExpenseActionHandler {
 
 
     }
-
 
     private fun setupNavigation() {
         navView.setNavigationItemSelectedListener { menuItem ->
